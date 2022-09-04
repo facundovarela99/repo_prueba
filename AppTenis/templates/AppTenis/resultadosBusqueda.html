@@ -1,0 +1,26 @@
+{% extends 'AppTenis/padre.html' %}
+
+{% load static %}
+
+{% block titulo %}
+<h1 class="mb-5">RESULTADOS DE LA BUSQUEDA</h1>
+{% endblock %}
+
+{% block contenido_que_cambia %}
+<h1>BUSQUEDA DE SOCIOS</h1>
+{% if socios %}
+
+<ul>
+    {% for socio in socios %}
+        <li>{{socio.nombre}}</li>
+        <li>{{socio.apellido}}</li>
+        <br>
+    {% endfor %}    
+</ul>
+
+{% else %}
+<p>NO SE ENCONTRARON SOCIOS</p>
+
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends 'AppTenis/padre.html' %}
+
+{% load static %}
+
+{% block titulo %}
+<h1 class="mb-5">FORMULARIO DE BUSQUEDA DE SOCIOS</h1>
+{% endblock %}
+
+{% block contenido_que_cambia %}
+<h1>FORMULARIO DE BUSQUEDA DE SOCIOS</h1>
+
+<form action="{% url 'buscar' %}" method='GET'>
+   
+    <input type="word" name="nombre" id="nombre">
+
+    <input type="word" name="apellido" id="apellido">
+
+    <input type="submit" value="buscar">
+
+</form>
+{% endblock %}

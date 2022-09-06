@@ -73,14 +73,12 @@ def cuartaCategoria(request):
     return render (request, 'AppTenis/cuartacategoria.html', {'formulario':form})
 
 def busquedaSocio(request):
-    return render(request, 'AppTenis/busquedaSocio.html', {'mensaje1': 'Ingresar nombre y apellido'})
+    return render(request, 'AppTenis/busquedaSocio.html', {'mensaje1': 'Ingresar apellido de socio'})
 
 def buscar(request):
-    if request.GET['nombre'] and request.GET['apellido']:
-
-        nombre=request.GET['nombre']
+    if request.GET['apellido']:
         apellido=request.GET['apellido']
-        socios=SociosTenis.objects.filter(nombre=nombre, apellido=apellido)
+        socios=SociosTenis.objects.filter(apellido=apellido)
         return render(request, 'AppTenis/resultadosBusqueda.html', {'socios':socios})
     else:
         return render(request, 'AppTenis/busquedaSocio.html', {'mensaje':'No se detectaron datos. Ingresar socio'})

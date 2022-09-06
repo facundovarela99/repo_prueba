@@ -3,9 +3,15 @@
 {% load static %}
 
 {% block titulo %}
-<h1 class="mb-5">ESTA ES LA SECCION DE DAMAS</h1>
+<h1 class="mb-5">FORMULARIO DE DAMAS</h1>
 {% endblock %}
 
 {% block contenido_que_cambia %}
-<h1>ESTE ES EL CONTENIDO QUE CAMBIA</h1>
+<form action="{% url 'damas' %}" method="Post"> {% csrf_token %}
+   
+    <table>
+        {{ formulario.as_table }}
+    </table>
+    <input type="submit" value="enviar">
+</form>
 {% endblock %}

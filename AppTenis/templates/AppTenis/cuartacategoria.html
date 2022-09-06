@@ -3,11 +3,11 @@
 {% load static %}
 
 {% block titulo %}
-<h1 class="mb-5">FORMULARIO DE TERCER CATEGORIA</h1>
+<h1 class="mb-5">FORMULARIO DE CUARTA CATEGORIA</h1>
 {% endblock %}
 
 {% block contenido_que_cambia %}
-<form action="{% url 'tercercatFormulario' %}" method="Post"> {% csrf_token %}
+<form action="{% url 'cuartacategoria' %}" method="Post"> {% csrf_token %}
    
     <table>
         {{ formulario.as_table }}

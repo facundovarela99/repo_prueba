@@ -6,20 +6,8 @@ from .forms import *
 # Create your views here.
 def inicio(request):
     return render (request, 'AppTenis/inicio.html')
-
-def sociostenis(request):
-    return render (request, 'AppTenis/sociostenis.html')
-
-def categoriatercera(request):
-    return render (request, 'AppTenis/categoriatercera.html')
-
-def categoriacuarta(request):
-    return render (request, 'AppTenis/categoriacuarta.html')
-
-def damas(request):
-    return render (request, 'AppTenis/damas.html')
-
-def SociosFormulario(request):
+    
+def Sociostenis(request):
     if request.method=='POST':
         form=SociosForm(request.POST)
         if form.is_valid():
@@ -34,9 +22,9 @@ def SociosFormulario(request):
 
     else:
         form=SociosForm()
-    return render (request, 'AppTenis/sociosForm.html', {'formulario':form})
+    return render (request, 'AppTenis/sociostenis.html', {'formulario':form})
 
-def tercerCatFormulario(request):
+def tercerCategoria(request):
     if request.method=='POST':
         form=TercerCatForm(request.POST)
         if form.is_valid():
@@ -50,9 +38,9 @@ def tercerCatFormulario(request):
 
     else:
         form=TercerCatForm()
-    return render (request, 'AppTenis/TercerCatForm.html', {'formulario':form})
+    return render (request, 'AppTenis/tercercategoria.html', {'formulario':form})
 
-def DamasFormulario(request):
+def Damas(request):
     if request.method=='POST':
         form=DamasForm(request.POST)
         if form.is_valid():
@@ -66,9 +54,9 @@ def DamasFormulario(request):
 
     else:
         form=DamasForm()
-    return render (request, 'AppTenis/DamaForm.html', {'formulario':form})
+    return render (request, 'AppTenis/damas.html', {'formulario':form})
 
-def cuartaCatFormulario(request):
+def cuartaCategoria(request):
     if request.method=='POST':
         form=CuartaCatForm(request.POST)
         if form.is_valid():
@@ -82,13 +70,20 @@ def cuartaCatFormulario(request):
 
     else:
         form=CuartaCatForm()
-    return render (request, 'AppTenis/CUartaCatForm.html', {'formulario':form})
+    return render (request, 'AppTenis/cuartacategoria.html', {'formulario':form})
 
 def busquedaSocio(request):
-    return render(request, 'AppTenis/busquedaSocio.html')
+    return render(request, 'AppTenis/busquedaSocio.html', {'mensaje1': 'Ingresar nombre y apellido'})
 
 def buscar(request):
-    nombre=request.GET['nombre']
-    apellido=request.GET['apellido']
-    socios=SociosTenis.objects.filter(nombre=nombre, apellido=apellido)
-    return render(request, 'AppTenis/resultadosBusqueda.html', {'socios':socios})
+    if request.GET['nombre'] and request.GET['apellido']:
+
+        nombre=request.GET['nombre']
+        apellido=request.GET['apellido']
+        socios=SociosTenis.objects.filter(nombre=nombre, apellido=apellido)
+        return render(request, 'AppTenis/resultadosBusqueda.html', {'socios':socios})
+    else:
+        return render(request, 'AppTenis/busquedaSocio.html', {'mensaje':'No se detectaron datos. Ingresar socio'})
+
+"""def busquedaDama(request):
+    return render(request, 'AppTenis/busquedaDama.html', {'mensaje1': 'Ingresar nombre y apellido'})"""

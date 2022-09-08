@@ -4,11 +4,11 @@ from AppTenis.views import *
 urlpatterns = [
     
     path('', inicio, name = 'inicio'),
-    path('sociostenis/', Sociostenis, name='sociostenis'),
-    path('tercercategoria/', tercerCategoria, name='tercercategoria'),
-    path('damas/', Damas, name='damas'),
-    path('cuartacategoria/', cuartaCategoria, name='cuartacategoria'),
-    path('busquedaSocio/', busquedaSocio, name='busquedaSocio'),
+    path('integrantesclub/', Integrantesclub, name='integrantesclub'),
+    path('busquedaIntegrante/', busquedaIntegrante, name='busquedaIntegrante'),
     path('buscar/', buscar, name='buscar'),
+    path('proveedoresclub/', Proveedoresclub, name='proveedoresclub'),
+    path('eventosclub/', Eventosclub, name='eventosclub'),
+    
 ]
 

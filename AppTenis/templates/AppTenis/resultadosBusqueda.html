@@ -7,21 +7,22 @@
 {% endblock %}
 
 {% block contenido_que_cambia %}
-<h1>BUSQUEDA DE SOCIOS</h1>
-{% if socios %}
+<h1>BUSQUEDA DE INTEGRANTES</h1>
+{% if integrantes %}
 
 <ul>
-    {% for socio in socios %}
-     <strong>NOMBRE</strong>   <li>{{socio.nombre}}</li>
-     <strong>APELLIDO</strong>   <li>{{socio.apellido}}</li>
-     <strong>EDAD</strong>   <li>{{socio.edad}}</li>
-     <strong>EMAIL</strong>   <li>{{socio.email}}</li>
+    {% for integrante in integrantes %}
+     <strong>NOMBRE</strong>   <li>{{integrante.nombre}}</li>
+     <strong>APELLIDO</strong>   <li>{{integrante.apellido}}</li>
+     <strong>EDAD</strong>   <li>{{integrante.edad}}</li>
+     <strong>EMAIL</strong>   <li>{{integrante.email}}</li>
+     <strong>GENERO</strong>   <li>{{integrante.genero}}</li>
         <br>
     {% endfor %}    
 </ul>
 
 {% else %}
-<p>NO SE ENCONTRARON SOCIOS</p>
+<p>NO SE ENCONTRARON INTEGRANTES</p>
 
 {% endif %}
 

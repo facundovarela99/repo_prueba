@@ -1,24 +1,20 @@
 from django import forms
 
-class SociosForm(forms.Form):
+class IntegranteForm(forms.Form):
     nombre=forms.CharField(max_length=50)
     apellido=forms.CharField(max_length=50)
     edad=forms.IntegerField()
     email=forms.EmailField()
+    genero=forms.CharField(max_length=5)
 
-class DamasForm(forms.Form):
-    nombre= forms.CharField(max_length=50)
-    apellido= forms.CharField(max_length=50)
-    edad = forms.IntegerField()
+class ProveedorForm(forms.Form):
+    nombre=forms.CharField(max_length=50)
+    ropa=forms.CharField(max_length=50)
+    equipo=forms.CharField(max_length=50)
 
-class TercerCatForm(forms.Form):
-    nombre= forms.CharField(max_length=50)
-    apellido= forms.CharField(max_length=50)
-    edad = forms.IntegerField()
-
-class CuartaCatForm(forms.Form):
-    nombre= forms.CharField(max_length=50)
-    apellido= forms.CharField(max_length=50)
-    edad = forms.IntegerField()
+class eventosForm(forms.Form):
+    nombre=forms.CharField(max_length=50)
+    partidos=forms.IntegerField()
+        
     
     

@@ -7,81 +7,62 @@ from .forms import *
 def inicio(request):
     return render (request, 'AppTenis/inicio.html')
     
-def Sociostenis(request):
+def Integrantesclub(request):
     if request.method=='POST':
-        form=SociosForm(request.POST)
-        if form.is_valid():
-            informacion=form.cleaned_data
-            nombre=informacion['nombre']
-            apellido=informacion['apellido']
-            edad=informacion['edad']
-            email=informacion['email']
-            socio=SociosTenis(nombre=nombre, apellido=apellido, edad=edad, email=email)
-            socio.save()
-            return render (request, 'AppTenis/inicio.html',  {"mensaje":"Socio creado"})
-
-    else:
-        form=SociosForm()
-    return render (request, 'AppTenis/sociostenis.html', {'formulario':form})
-
-def tercerCategoria(request):
-    if request.method=='POST':
-        form=TercerCatForm(request.POST)
+        form=IntegranteForm(request.POST)
         if form.is_valid():
             info=form.cleaned_data
             nombre=info['nombre']
             apellido=info['apellido']
             edad=info['edad']
-            jugador_cat3=CatTercera(nombre=nombre, apellido=apellido, edad=edad)
-            jugador_cat3.save()
-            return render (request, 'AppTenis/inicio.html',  {"mensaje":"Jugador de tercer categoria CREADO"})
-
+            email=info['email']
+            genero=info['genero']
+            integrante=IntegrantesClub(nombre=nombre, apellido=apellido, edad=edad, email=email, genero=genero)
+            integrante.save()
+            return render (request, 'AppTenis/inicio.html', {"mensaje":"Integrante registrado"})
     else:
-        form=TercerCatForm()
-    return render (request, 'AppTenis/tercercategoria.html', {'formulario':form})
+        form=IntegranteForm()
+    return render (request, 'AppTenis/integrantesclub.html', {'formulario':form})
 
-def Damas(request):
+def Proveedoresclub(request):
     if request.method=='POST':
-        form=DamasForm(request.POST)
+        form=ProveedorForm(request.POST)
         if form.is_valid():
             inf=form.cleaned_data
             nombre=inf['nombre']
-            apellido=inf['apellido']
-            edad=inf['edad']
-            dama=CatDamas(nombre=nombre, apellido=apellido, edad=edad)
-            dama.save()
-            return render (request, 'AppTenis/inicio.html',  {"mensaje":"Dama CREADA"})
-
+            ropa=inf['ropa']
+            equipo=inf['equipo']
+            proveedor=ProveedorIndumentaria(nombre=nombre, ropa=ropa, equipo=equipo)
+            proveedor.save()
+            return render (request, 'AppTenis/inicio.html', {'mensaje':'Proveedor creado'})
     else:
-        form=DamasForm()
-    return render (request, 'AppTenis/damas.html', {'formulario':form})
+        form=ProveedorForm()
+    return render (request, 'AppTenis/proveedoresclub.html', {'formulario':form})
 
-def cuartaCategoria(request):
+def Eventosclub(request):
     if request.method=='POST':
-        form=CuartaCatForm(request.POST)
+        form=eventosForm(request.POST)
         if form.is_valid():
-            info=form.cleaned_data
-            nombre=info['nombre']
-            apellido=info['apellido']
-            edad=info['edad']
-            jugador_cat4=CatCuarta(nombre=nombre, apellido=apellido, edad=edad)
-            jugador_cat4.save()
-            return render (request, 'AppTenis/inicio.html',  {"mensaje":"Jugador de cuarta categoria CREADO"})
-
+            informacion=form.cleaned_data
+            nombre=informacion['nombre']
+            partidos=informacion['partidos']
+            evento=eventos(nombre=nombre, partidos=partidos)
+            evento.save()
+            return render (request, 'AppTenis/inicio.html', {'mensaje':'Evento creado'})
     else:
-        form=CuartaCatForm()
-    return render (request, 'AppTenis/cuartacategoria.html', {'formulario':form})
-
-def busquedaSocio(request):
-    return render(request, 'AppTenis/busquedaSocio.html', {'mensaje1': 'Ingresar apellido de socio'})
+        form=eventosForm()
+    return render (request, 'AppTenis/eventosclub.html', {'formulario':form})
+            
+def busquedaIntegrante(request):
+    return render(request, 'AppTenis/busquedaIntegrante.html', {'mensaje1': 'Ingresar apellido del integrante'})
 
 def buscar(request):
     if request.GET['apellido']:
         apellido=request.GET['apellido']
-        socios=SociosTenis.objects.filter(apellido=apellido)
-        return render(request, 'AppTenis/resultadosBusqueda.html', {'socios':socios})
+        integrantes=IntegrantesClub.objects.filter(apellido=apellido)
+        return render(request, 'AppTenis/resultadosBusqueda.html', {'integrantes':integrantes})
     else:
-        return render(request, 'AppTenis/busquedaSocio.html', {'mensaje':'No se detectaron datos. Ingresar socio'})
+        return render(request, 'AppTenis/busquedaIntegrante.html', {'mensaje':'No se detectaron datos. Ingresar integrante'})
 
 """def busquedaDama(request):
     return render(request, 'AppTenis/busquedaDama.html', {'mensaje1': 'Ingresar nombre y apellido'})"""

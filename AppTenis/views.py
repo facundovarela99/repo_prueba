@@ -19,7 +19,8 @@ def Integrantesclub(request):
             genero=info['genero']
             integrante=IntegrantesClub(nombre=nombre, apellido=apellido, edad=edad, email=email, genero=genero)
             integrante.save()
-            return render (request, 'AppTenis/inicio.html', {"mensaje":"Integrante registrado"})
+            integrantes=IntegrantesClub.objects.all()
+            return render (request, 'AppTenis/leerintegrantes.html', {'integrantes':integrantes})
     else:
         form=IntegranteForm()
     return render (request, 'AppTenis/integrantesclub.html', {'formulario':form})
@@ -64,5 +65,12 @@ def buscar(request):
     else:
         return render(request, 'AppTenis/busquedaIntegrante.html', {'mensaje':'No se detectaron datos. Ingresar integrante'})
 
-"""def busquedaDama(request):
-    return render(request, 'AppTenis/busquedaDama.html', {'mensaje1': 'Ingresar nombre y apellido'})"""
+def leerIntegrantes(request):
+    integrantes=IntegrantesClub.objects.all()
+    return render (request, 'AppTenis/leerintegrantes.html', {'integrantes':integrantes})
+
+def eliminarIntegrante(request, id):
+    integrante=IntegrantesClub.objects.get(id=id)
+    integrante.delete()
+    integrantes=IntegrantesClub.objects.all()
+    return render (request, 'AppTenis/leerintegrantes.html', {'integrantes':integrantes})

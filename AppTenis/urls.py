@@ -9,6 +9,8 @@ urlpatterns = [
     path('buscar/', buscar, name='buscar'),
     path('proveedoresclub/', Proveedoresclub, name='proveedoresclub'),
     path('eventosclub/', Eventosclub, name='eventosclub'),
+    path('leerintegrantes/', leerIntegrantes, name='leerintegrantes'),
+    path('eliminarIntegrante/<id>', eliminarIntegrante, name='eliminarIntegrante'),
     
 ]
 

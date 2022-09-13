@@ -1,0 +1,17 @@
+{% extends 'AppTenis/padre.html' %}
+
+{% load static %}
+
+{% block titulo %}
+<h1 class="mb-5">DATOS DE INTEGRANTE</h1>
+{% endblock %}
+
+{% block contenido_que_cambia %}
+
+<p>NOMBRE : <i>{{integrante.nombre}}</i></p>
+<p>APELLIDO : <i>{{integrante.apellido}}</i></p>
+<p>EDAD : <i>{{integrante.edad}}</i></p>
+<p>EMAIL : <i>{{integrante.email}}</i></p>
+<p>GENERO : <i>{{integrante.genero}}</i></p>
+
+{% endblock %}

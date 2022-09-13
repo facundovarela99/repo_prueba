@@ -11,6 +11,9 @@ urlpatterns = [
     path('eventosclub/', Eventosclub, name='eventosclub'),
     path('leerintegrantes/', leerIntegrantes, name='leerintegrantes'),
     path('eliminarIntegrante/<id>', eliminarIntegrante, name='eliminarIntegrante'),
-    
+    #cbv
+    path('int/list/', IntegrantesList.as_view(), name = 'integrantes_listar'),
+    path('integrante/<pk>', IntegranteDetalle.as_view(), name ='integrante_detalle'),
+    path('int/nuevo/', IntegranteCreacion.as_view(), name ='integrante_crear'),
 ]
 

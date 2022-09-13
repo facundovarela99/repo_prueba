@@ -1,6 +1,10 @@
 from django.shortcuts import render
 from .models import *
 from .forms import *
+from django.views.generic import ListView
+from django.views.generic.detail import DetailView
+from django.views.generic.edit import CreateView
+from django.urls import reverse_lazy
 
 
 # Create your views here.
@@ -74,3 +78,17 @@ def eliminarIntegrante(request, id):
     integrante.delete()
     integrantes=IntegrantesClub.objects.all()
     return render (request, 'AppTenis/leerintegrantes.html', {'integrantes':integrantes})
+###CBV
+
+class IntegrantesList(ListView):
+    model = IntegrantesClub
+    template_name = 'AppTenis/leerIntegrantesclub.html'
+
+class IntegranteDetalle(DetailView):
+    model = IntegrantesClub
+    template_name = 'AppTenis/integranteDetalle.html'
+
+class IntegranteCreacion(CreateView):
+    model = IntegrantesClub
+    success_url = reverse_lazy('integrante_crear')
+    fields = ['nombre', 'apellido', 'edad', 'email', 'genero']

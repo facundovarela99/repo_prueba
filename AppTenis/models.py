@@ -1,6 +1,7 @@
 import email
 from django.db import models
 
+
 # EL MODELS INTERACTUA CON LA BASE DE DATOS
 
 class IntegrantesClub(models.Model):
@@ -24,6 +25,4 @@ class eventos(models.Model):
     partidos=models.IntegerField()
     def __str__(self):
         return self.nombre+" "+str(self.partidos)
-
-    
 

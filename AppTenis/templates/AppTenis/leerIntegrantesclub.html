@@ -1,0 +1,21 @@
+{% extends 'AppTenis/padre.html' %}
+
+{% load static %}
+
+{% block titulo %}
+<h1 class="mb-5">LISTADO DE INTEGRANTES</h1>
+{% endblock %}
+
+{% block contenido_que_cambia %}
+<h1>INTEGRANTES</h1>
+
+<ul>
+    {% for int in object_list %}
+       <li>{{ int }}</li>
+        <br>
+    {% endfor %}    
+</ul>
+
+
+
+{% endblock %}

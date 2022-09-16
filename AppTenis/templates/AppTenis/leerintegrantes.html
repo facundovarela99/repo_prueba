@@ -14,6 +14,7 @@
     {% for int in integrantes %}
        <h4>{{int.nombre}} {{int.apellido}} - {{int.edad}} - {{int.email}} - {{int.genero}}</h4>
        <a class="btn btn-danger" href="{% url 'eliminarIntegrante' int.id %}">Eliminar</a>
+       <a class="btn btn-primary" href="{% url 'editarIntegrante' int.id %}">Editar</a>
         <br>
     {% endfor %}    
 </ul>

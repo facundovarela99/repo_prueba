@@ -1,10 +1,10 @@
 from django.shortcuts import render
 from .models import *
 from .forms import *
-from django.views.generic import ListView
-from django.views.generic.detail import DetailView
-from django.views.generic.edit import CreateView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView
 from django.urls import reverse_lazy
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth import login, logout, authenticate
 
 
 # Create your views here.
@@ -78,17 +78,62 @@ def eliminarIntegrante(request, id):
     integrante.delete()
     integrantes=IntegrantesClub.objects.all()
     return render (request, 'AppTenis/leerintegrantes.html', {'integrantes':integrantes})
-###CBV
+
+def editarIntegrante(request, id):
+    integrante=IntegrantesClub.objects.get(id=id)
+    if request.method=='POST': 
+        form=IntegranteForm(request.POST)
+        if form.is_valid():
+            info=form.cleaned_data
+            integrante.nombre=info['nombre']
+            integrante.apellido=info['apellido']
+            integrante.edad=info['edad']
+            integrante.email=info['email']
+            integrante.genero=info['genero']
+            integrante.save()
+            integrantes=IntegrantesClub.objects.all() #al editar, me devuelva el formulario vacio (el integrante se editó)
+            return render(request, 'AppTenis/leerintegrantes.html', {'integrantes':integrantes})
+    else:
+        form=IntegranteForm(initial={'nombre':integrante.nombre, 'apellido':integrante.apellido, 'edad':integrante.edad, 'email':integrante.email, 'genero':integrante.genero})
+        return render(request, 'AppTenis/editarIntegrante.html', {'formulario':form, 'integrante':integrante})
+
+########### CBV ###########
 
 class IntegrantesList(ListView):
     model = IntegrantesClub
     template_name = 'AppTenis/leerIntegrantesclub.html'
 
-class IntegranteDetalle(DetailView):
+class IntegranteDetalle(DetailView): #DEVUELVE CAMPOS VACIOS (?)
     model = IntegrantesClub
-    template_name = 'AppTenis/integranteDetalle.html'
+    template_name = 'AppTenis/integrantedetalle.html'
 
-class IntegranteCreacion(CreateView):
+class IntegranteCreacion(CreateView): #Funciona si solo si tengo un template llamado ''integrante_form''????
     model = IntegrantesClub
     success_url = reverse_lazy('integrante_crear')
-    fields = ['nombre', 'apellido', 'edad', 'email', 'genero']
+    fields=['nombre', 'apellido', 'edad', 'email', 'genero']
+
+    #ValueError at /AppTenis/integrante/nuevo
+    #Field 'id' expected a number but got 'nuevo'.
+class IntegranteUpdate(UpdateView):
+    model=IntegrantesClub
+    success_url = reverse_lazy('integrante_crear')
+    fields=['nombre', 'apellido', 'edad', 'email', 'genero']
+
+#PORQUE AL CREAR O UPDATEAR NO ME DEVUELVE LA LISTA DE INTEGRANTES Y ME DEVUELVE LOS CAMPOS VACIOS (EL INTEGRANTE SE CREó)
+########### CBV ###########
+
+########## login logout register ###########
+
+def login_request(request):
+    if request.method=='POST':
+        form=AuthenticationForm(request, data=request.POST)
+        if form.is_valid():
+            usu=request.POST['username']
+            clave=request.POST['password']
+            usuario=authenticate(username=usu, password=clave)
+    else:
+        form=AuthenticationForm()
+        return render(request, 'AppTenis/login.html', {'formulario':form})
+        #continuar playground parte 2 minuto 21:44
+
+

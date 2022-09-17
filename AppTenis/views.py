@@ -1,13 +1,17 @@
 from django.shortcuts import render
 from .models import *
 from .forms import *
-from django.views.generic import ListView, DetailView, CreateView, UpdateView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
-from django.contrib.auth.forms import AuthenticationForm
+
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth import login, logout, authenticate
 
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
+@login_required #NO FUNCA
 def inicio(request):
     return render (request, 'AppTenis/inicio.html')
     
@@ -99,13 +103,13 @@ def editarIntegrante(request, id):
 
 ########### CBV ###########
 
-class IntegrantesList(ListView):
+class IntegrantesList(LoginRequiredMixin, ListView):
     model = IntegrantesClub
     template_name = 'AppTenis/leerIntegrantesclub.html'
 
-class IntegranteDetalle(DetailView): #DEVUELVE CAMPOS VACIOS (?)
+class IntegranteDetalle(LoginRequiredMixin, DetailView): #DEVUELVE CAMPOS VACIOS (?) SOLUCIONADO
     model = IntegrantesClub
-    template_name = 'AppTenis/integrantedetalle.html'
+    template_name = 'AppTenis/integrantesclubdetalle.html'
 
 class IntegranteCreacion(CreateView): #Funciona si solo si tengo un template llamado ''integrante_form''????
     model = IntegrantesClub
@@ -118,12 +122,15 @@ class IntegranteUpdate(UpdateView):
     model=IntegrantesClub
     success_url = reverse_lazy('integrante_crear')
     fields=['nombre', 'apellido', 'edad', 'email', 'genero']
-
 #PORQUE AL CREAR O UPDATEAR NO ME DEVUELVE LA LISTA DE INTEGRANTES Y ME DEVUELVE LOS CAMPOS VACIOS (EL INTEGRANTE SE CREó)
+class IntegranteDelete(DeleteView):
+    model = IntegrantesClub
+    success_url= reverse_lazy('integrantes_listar')
+
+
 ########### CBV ###########
 
 ########## login logout register ###########
-
 def login_request(request):
     if request.method=='POST':
         form=AuthenticationForm(request, data=request.POST)
@@ -131,9 +138,27 @@ def login_request(request):
             usu=request.POST['username']
             clave=request.POST['password']
             usuario=authenticate(username=usu, password=clave)
+            if usuario is not None:
+                login(request, usuario)
+                return render(request, 'AppTenis/inicio.html', {'mensaje':f'Bienvenido {usuario}'})
+            else:
+                return render(request, 'AppTenis/inicio.html', {'formulario':form, 'mensaje':f'Usuario o contraseña incorrectos'})
+        else:
+            return render(request, 'AppTenis/inicio.html', {'formulario':form, 'mensaje':f'Usuario o contraseña incorrectos'})
     else:
         form=AuthenticationForm()
         return render(request, 'AppTenis/login.html', {'formulario':form})
-        #continuar playground parte 2 minuto 21:44
-
+    
+def register(request):
+    if request.method=='POST':
+        form=UserRegisterForm(request.POST)
+        if form.is_valid():
+            username=form.cleaned_data.get('username')
+            form.save()
+            return render(request, 'AppTenis/inicio.html', {'mensaje':f'Usuario {username} creado correctamente'})
+        else:
+            return render(request, 'AppTenis/register.html', {'formulario':form, 'mensaje':f'FORMULARIO INVALIDO'})
+    else:
+        form=UserRegisterForm()
+        return render(request, 'AppTenis/register.html', {'formulario':form})
 

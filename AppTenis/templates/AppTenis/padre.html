@@ -25,6 +25,12 @@
                 <a class="btn btn-warning" href="{% url 'proveedoresclub' %}">Proveedores</a>
                 <a class="btn btn-success" href="{% url 'eventosclub' %}">Eventos</a>
                 <a class="btn btn-primary" href="{% url 'busquedaIntegrante' %}">Busqueda de Integrantes</a>
+                {% if user.is_authenticated %}
+                <a class="navbar-brand" href="{% url 'logout' %}">DESLOGUEATE</a>
+                {% else %}
+                <a class="navbar-brand" href="{% url 'login' %}">LOGUEATE</a>
+                <a class="navbar-brand" href="{% url 'register' %}">REGISTRARSE</a>
+                {% endif %}
                 
             </div>
         </nav>

@@ -3,17 +3,17 @@
 {% load static %}
 
 {% block titulo %}
-<h1 class="mb-5">FORMULARIO DE INTEGRANTES</h1>
+<h1 class="mb-5">FORMULARIO DE REGISTRO</h1>
 {% endblock %}
 
 {% block contenido_que_cambia %}
-<h1>FORMULARIO DE INGRESO</h1>
-<form action="{% url 'login' %}" method="Post"> {% csrf_token %}
+<h1>FORMULARIO DE REGISTRO</h1>
+<form action="{% url 'register' %}" method="Post"> {% csrf_token %}
    
     <table>
         {{ formulario.as_table }}
     </table>
-    <button type="submit">INICIAR SESION</button>
+    <button type="submit">REGISTRARSE</button>
 </form>
 
 <h2>{{ mensaje }}</h2>

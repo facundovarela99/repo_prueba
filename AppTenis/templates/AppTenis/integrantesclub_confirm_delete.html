@@ -1,0 +1,17 @@
+{% extends 'AppTenis/padre.html' %}
+
+{% load static %}
+
+{% block titulo %}
+<h1 class="mb-5">FORMULARIO DE INTEGRANTES</h1>
+{% endblock %}
+
+{% block contenido_que_cambia %}
+<h1>FORMULARIO DE INTEGRANTES!</h1>
+
+<form method="post">{% csrf_token %}
+    Esta seguro quer desea borrar el integrante ''{{ object}}''?
+    <input type="submit" value="SI">
+
+</form>
+{% endblock %}
